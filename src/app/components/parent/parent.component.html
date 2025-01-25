@@ -1,0 +1,13 @@
+<p>parent works!</p>
+<app-child [message]="'hello parent message'" (messageEvent)="receiveMessage($event)">
+
+    <h1 question>this is question</h1>
+    <p answer>this is answer</p>
+    
+
+</app-child>
+
+<button (click)="showtext()">show text</button>
+
+
+<!-- {{"ahemd" | stringPip:"ahmed" }} -->

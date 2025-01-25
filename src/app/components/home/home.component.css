@@ -1,0 +1,54 @@
+
+.slider{
+    width:80%;
+    margin:30px auto;
+}
+
+.slider .image{
+
+    width:510px!important;
+    height:310px !important;
+    padding:10px 12px;
+    border:1px solid #eee;
+    margin:30px auto;
+
+}
+
+.slider .image img{
+    width:500px!important;
+    height:300px !important;
+    border-radius:12px;
+    margin:auto;
+
+    
+}
+
+.btn-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    gap:8px;
+    margin-top:12px;
+
+}
+
+.btn-container .btn{
+    padding:8px 27px !important;
+    color:#333;
+}
+.btn-container .btn:hover{
+    box-shadow:2px 2px 3px #ccc;
+}
+.btn-container .btn.play{
+background-color:#36f5358f;
+}
+.btn-container .btn.pause{
+background-color:#e344;
+}
+.btn-container .btn.next{
+background-color:#0d6efd;
+}
+.btn-container .btn.prev{
+background-color:#eac03fd6;
+}
