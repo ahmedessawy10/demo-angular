@@ -1,1 +1,22 @@
-<p>order works!</p>
+<div class="container">
+    <div class="row row-gap-2">
+    @for(product of productList;track product;let index= $index;){
+      
+            <div class="col-md-4 col-12 ">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{product.thumbnail}}" alt="">
+                        <h5 class="card-title text-center">{{product.title}}</h5>
+                        <!-- <p class="card-text">{{product.description}}</p> -->
+                        <p class="card-text text-center text-danger fs-3"> {{product.price}}$</p>
+                        <button class="btn btn-success m-auto px-3 py-2">add to card</button>
+                    </div>
+                </div>
+            </div>
+     
+    }
+
+</div>
+
+
+</div>
