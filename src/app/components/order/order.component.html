@@ -1,4 +1,6 @@
 <div class="container">
+    <!-- <h1>Total Price : {{TotalPrice|calc:10}}</h1> -->
+    <h1>Total Price : {{TotalPrice}}</h1>
     <div class="row row-gap-2">
     @for(product of productList;track product;let index= $index;){
       
@@ -6,10 +8,13 @@
                 <div class="card">
                     <div class="card-body">
                         <img src="{{product.thumbnail}}" alt="">
-                        <h5 class="card-title text-center">{{product.title}}</h5>
+                        <h5 class="card-title text-center">{{product.title |uppercase}}</h5>
                         <!-- <p class="card-text">{{product.description}}</p> -->
-                        <p class="card-text text-center text-danger fs-3"> {{product.price}}$</p>
-                        <button class="btn btn-success m-auto px-3 py-2">add to card</button>
+
+                        <p class="card-text text-center  fs-3" > Qrt:  {{product.stock}}</p>
+                        <p class="card-text text-center text-danger fs-3"> {{product.price | calc:10}}</p>
+                        <input type="number" #countInp [max]="product.stock" min="1">
+                        <button ngstyle="{display:product.stock>0?'block':'none'}"   class="btn btn-success m-auto px-4 py-2 d-block fw-bold text-capitalize " [disabled]="product.stock===0" (click)="BuyProducts(product,countInp.value)">add to card</button>
                     </div>
                 </div>
             </div>

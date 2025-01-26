@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
 import { ProductList } from '../Models/product-list';
+import { CurrencyPipe, NgClass, NgStyle, UpperCasePipe } from '@angular/common';
+import { LightboxDirective } from '../Directives/lightbox.directive';
+import { CalcPipe } from '../Pipes/calc.pipe';
 
 @Component({
   selector: 'app-order',
-  imports: [],
+  imports: [NgClass, UpperCasePipe, CurrencyPipe, NgStyle, LightboxDirective, CalcPipe],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
 export class ORDERComponent {
 
   productList: ProductList[] = [];
-
+  TotalPrice: number = 0;
+  BuyProducts(p: ProductList, count: any) {
+    this.TotalPrice += p.price * count;
+    p.stock -= count;
+  }
   constructor() {
 
     this.productList = [
@@ -561,7 +568,7 @@ export class ORDERComponent {
           "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/3.png"
         ],
         "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/thumbnail.png"
-      },  
+      },
 
     ];
   }
