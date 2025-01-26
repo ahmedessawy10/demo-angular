@@ -18,6 +18,19 @@ export class ORDERComponent {
     this.TotalPrice += p.price * count;
     p.stock -= count;
   }
+
+  add(countInp: any) {
+    if (countInp.value < +countInp.max) {
+      countInp.value++;
+    }
+
+  }
+  sub(countInp: any) {
+    if (countInp.value > +countInp.min) {
+      countInp.value--;
+    }
+
+  }
   constructor() {
 
     this.productList = [
