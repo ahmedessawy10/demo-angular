@@ -1,0 +1,25 @@
+<h1>{{newPrd|json}}</h1>
+<h1>{{inpName.errors |json}}</h1>
+<hr>
+<form action="" (ngSubmit)="AddPrd()" #prdForm="ngForm">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Product Name" name="name"
+            [(ngModel)]="newPrd.name" required pattern="[A-Za-z]{4}" #inpName="ngModel">
+        <label for="floatingInput">Product Name</label>
+    </div>
+    <div [hidden]="inpName.valid||inpName.untouched">
+        <small class="alert alert-danger" [hidden]="!inpName.errors?.['required']">
+            prd name is required
+        </small>
+        <small class="alert alert-danger" [hidden]="!inpName.errors?.['pattern']">
+            prd name must be 4 letters only and you entered {{inpName.errors?.['pattern']?.['actualValue']}}
+        </small>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" placeholder="Enter Product Price" name="price"
+            [(ngModel)]="newPrd.price">
+        <label for="floatingInput">Product Price</label>
+    </div>
+
+    <button class="btn btn-dark w-100" [disabled]="prdForm.invalid">Submit</button>
+</form>

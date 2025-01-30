@@ -1,35 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ProductList } from '../Models/product-list';
 import { CurrencyPipe, NgClass, NgStyle, UpperCasePipe } from '@angular/common';
 import { LightboxDirective } from '../Directives/lightbox.directive';
 import { CalcPipe } from '../Pipes/calc.pipe';
+import { BuyComponent } from "../buy/buy.component";
 
 @Component({
   selector: 'app-order',
-  imports: [NgClass, UpperCasePipe, CurrencyPipe, NgStyle, LightboxDirective, CalcPipe],
+  imports: [NgClass, UpperCasePipe, CurrencyPipe, NgStyle, LightboxDirective, CalcPipe, BuyComponent],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
 export class ORDERComponent {
 
+  @Input() SendcategoryID: number = 0;
+  @Output() sendTotalPrice = new EventEmitter<number>();
   productList: ProductList[] = [];
+  filteredList: ProductList[];
   TotalPrice: number = 0;
-  BuyProducts(p: ProductList, count: any) {
-    this.TotalPrice += p.price * count;
-    p.stock -= count;
-  }
 
-  add(countInp: any) {
-    if (countInp.value < +countInp.max) {
-      countInp.value++;
-    }
 
-  }
-  sub(countInp: any) {
-    if (countInp.value > +countInp.min) {
-      countInp.value--;
-    }
 
+  BuyProducts($event: { price: number, product: ProductList, count: number }) {
+    this.TotalPrice += $event.price;
+    let p = $event.product;
+    // p.stock -= $event.count;
+    this.sendTotalPrice.emit(this.TotalPrice);
   }
   constructor() {
 
@@ -38,7 +34,7 @@ export class ORDERComponent {
         "id": 1,
         "title": "Essence Mascara Lash Princess",
         "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-        "category": "beauty",
+        "category": 1,
         "price": 9.99,
         "discountPercentage": 7.17,
         "rating": 4.94,
@@ -98,7 +94,7 @@ export class ORDERComponent {
         "id": 2,
         "title": "Eyeshadow Palette with Mirror",
         "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
-        "category": "beauty",
+        "category": 1,
         "price": 19.99,
         "discountPercentage": 5.5,
         "rating": 3.28,
@@ -158,7 +154,7 @@ export class ORDERComponent {
         "id": 3,
         "title": "Powder Canister",
         "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
-        "category": "beauty",
+        "category": 1,
         "price": 14.99,
         "discountPercentage": 18.14,
         "rating": 3.82,
@@ -218,7 +214,7 @@ export class ORDERComponent {
         "id": 4,
         "title": "Red Lipstick",
         "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
-        "category": "beauty",
+        "category": 1,
         "price": 12.99,
         "discountPercentage": 19.03,
         "rating": 2.51,
@@ -278,7 +274,7 @@ export class ORDERComponent {
         "id": 5,
         "title": "Red Nail Polish",
         "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
-        "category": "beauty",
+        "category": 1,
         "price": 8.99,
         "discountPercentage": 2.46,
         "rating": 3.91,
@@ -338,7 +334,7 @@ export class ORDERComponent {
         "id": 6,
         "title": "Calvin Klein CK One",
         "description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
-        "category": "fragrances",
+        "category": 2,
         "price": 49.99,
         "discountPercentage": 0.32,
         "rating": 4.85,
@@ -400,7 +396,7 @@ export class ORDERComponent {
         "id": 7,
         "title": "Chanel Coco Noir Eau De",
         "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
-        "category": "fragrances",
+        "category": 2,
         "price": 129.99,
         "discountPercentage": 18.64,
         "rating": 2.76,
@@ -462,7 +458,7 @@ export class ORDERComponent {
         "id": 8,
         "title": "Dior J'adore",
         "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-        "category": "fragrances",
+        "category": 2,
         "price": 89.99,
         "discountPercentage": 17.44,
         "rating": 3.31,
@@ -524,7 +520,7 @@ export class ORDERComponent {
         "id": 9,
         "title": "Dolce Shine Eau de",
         "description": "Dolce Shine by Dolce & Gabbana is a vibrant and fruity fragrance, featuring notes of mango, jasmine, and blonde woods. It's a joyful and youthful scent.",
-        "category": "fragrances",
+        "category": 2,
         "price": 69.99,
         "discountPercentage": 11.47,
         "rating": 2.68,
@@ -584,5 +580,19 @@ export class ORDERComponent {
       },
 
     ];
+    this.filteredList = this.productList;
+  }
+
+
+  filter() {
+    if (this.SendcategoryID != 0) {
+      this.filteredList = this.productList.filter(x => x.category == Number(this.SendcategoryID));
+    } else {
+      this.filteredList = this.productList;
+    }
+  }
+
+  ngOnChanges(): void {
+    this.filter();
   }
 }

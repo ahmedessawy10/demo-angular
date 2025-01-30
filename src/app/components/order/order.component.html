@@ -1,8 +1,8 @@
 <div class="container">
     <!-- <h1>Total Price : {{TotalPrice|calc:10}}</h1> -->
-    <h1>Total Price : {{TotalPrice}}</h1>
+  
     <div class="row row-gap-2">
-    @for(product of productList;track product;let index= $index;){
+    @for(product of filteredList;track product;let index= $index;){
       
             <div class="col-md-4 col-12 ">
                 <div class="card">
@@ -13,19 +13,9 @@
 
                         <p class="card-text text-center  fs-3" > Qrt:  {{product.stock}}</p>
                         <p class="card-text text-center text-danger fs-3"> {{product.price | calc:10}}</p>
-                        <div class="d-flex  gap-2 align-items-center my-2 justify-content-center ">
-                           
-
-                            <button (click)="sub(countInp)" class="btn btn-primary text-white ">
-                                -
-                            </button>
-                            <input type="text" #countInp  disabled [max]="product.stock" min="1" class="rounded-3 py-2 " style="width:50px"  >
-                            <button (click)="add(countInp)" class="btn btn-primary text-white">
-                                +
-                             </button>
-                        </div>
                        
-                        <button ngstyle="{display:product.stock>0?'block':'none'}"   class="btn btn-success m-auto px-4 py-2 d-block fw-bold text-capitalize " [disabled]="product.stock===0" (click)="BuyProducts(product,countInp.value)">add to card</button>
+                       
+                      <app-buy [p]="product" (BuyProductsEvent)="BuyProducts($event)"></app-buy>
                     </div>
                 </div>
             </div>

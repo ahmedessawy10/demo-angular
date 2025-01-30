@@ -1,9 +1,12 @@
-<app-header></app-header>
-<div class="container " style="min-height: 86vh;">
-  <app-home></app-home>
-  
-</div>
-<app-order></app-order>
-<app-parent></app-parent>
 
-<app-footer></app-footer>
+@if (!isErrorRoute) {
+  <app-header ></app-header>
+}
+<div class="container " style="min-height: 86vh;">
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
+
+@if (!isErrorRoute) {
+  <app-footer ></app-footer>
+}
+

@@ -1,0 +1,78 @@
+<h1>{{userRegister.get('fullName')?.errors|json}}</h1>
+<h1>{{fullName?.errors|json}}</h1>
+<hr>
+<form action="" [formGroup]="userRegister">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Enter FullName"
+            formControlName="fullName">
+        <label for="floatingInput">FullName</label>
+    </div>
+    <div [hidden]="fullName?.valid||fullName?.untouched">
+        @if(fullName?.errors?.['required']){
+        <small class="alert alert-danger">fullName is required</small>
+        }
+        @if(fullName?.errors?.['pattern']){
+        <small class="alert alert-danger">you should enter 5 letters only</small>
+        }
+    </div>
+
+
+    <div formGroupName="address">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Enter city" formControlName="city">
+            <label for="floatingInput">City</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Enter Streat"
+                formControlName="streat">
+            <label for="floatingInput">Streat</label>
+        </div>
+    </div>
+
+
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" value="social" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
+            formControlName="referral">
+        <label class="btn btn-outline-primary" for="btnradio1">Social</label>
+
+        <input type="radio" value="friends" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+            formControlName="referral">
+        <label class="btn btn-outline-primary" for="btnradio2">Friends</label>
+
+        <input type="radio" value="others" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+            formControlName="referral">
+        <label class="btn btn-outline-primary" for="btnradio3">Others</label>
+    </div>
+    @if(referral?.value === 'others'){
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="referralother">
+        <label for="floatingInput">referralother</label>
+    </div>
+    }
+
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingInput" placeholder="Enter Password"
+            formControlName="password">
+        <label for="floatingInput">Password</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingInput" placeholder="Enter Conformed Password"
+            formControlName="confirmedpassword">
+        <label for="floatingInput">Confirmed Password</label>
+    </div>
+
+    @if((confirmedpassword?.touched&&password?.touched)
+    &&(userRegister?.errors?.['UnMatcherPass']||confirmedpassword?.invalid)){
+        <div class="alert alert-danger">
+            @if(confirmedpassword?.errors?.['required']){
+                <small>confirmed password is required</small>
+            }
+            @if(userRegister?.errors?.['UnMatcherPass']){
+                <small>confirmed password must be matched with password</small>
+            }
+
+        </div>
+    }
+    <button class="btn btn-dark w-100" [disabled]="userRegister.invalid">Submit</button>
+</form>

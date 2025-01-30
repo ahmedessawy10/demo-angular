@@ -1,0 +1,17 @@
+
+<div class="container my-4">
+    <label for="catID" class="form-label"> select category</label>
+    <select name="" id="catID"  [(ngModel)]="SelectedCatID" class="form-control">
+    <option value="">select category</option>
+        @for(cate of catList;track cate;let index= $index;){
+            <option [value]="cate.id"  selected="{{index==0?'selected':''}}" >{{cate.name}}</option>
+        }
+    
+    </select>
+
+    
+
+</div>
+
+<h1>Total Price : {{TotalPrice}}</h1>
+<app-order [SendcategoryID]="SelectedCatID" (sendTotalPrice)="getTotalPrice($event)" ></app-order>

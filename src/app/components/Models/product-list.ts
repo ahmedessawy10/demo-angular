@@ -5,7 +5,7 @@ export interface ProductList {
     title: string,
     price: number,
     description: string,
-    category: string,
+    category: number,
     discountPercentage: number,
     rating: number,
     stock: number,

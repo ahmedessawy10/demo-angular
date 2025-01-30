@@ -1,0 +1,13 @@
+<div class="d-flex  gap-2 align-items-center my-2 justify-content-center ">
+                           
+
+    <button (click)="sub(countInp)" class="btn btn-primary text-white ">
+        -
+    </button>
+    <input type="text" #countInp   disabled [max]="p.stock" min="1" class="rounded-3 py-2 " style="width:50px"  >
+    <button (click)="add(countInp)" class="btn btn-primary text-white">
+        +
+     </button>
+</div>
+
+<button ngstyle="{display:product.stock>0?'block':'none'}"   class="btn btn-success m-auto px-4 py-2 d-block fw-bold text-capitalize "  [disabled]="p.stock==0" (click)="BuyProducts(countInp.value)">add to card</button>
